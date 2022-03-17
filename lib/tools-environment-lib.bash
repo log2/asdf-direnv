@@ -138,7 +138,7 @@ _cksum() {
   local file="$1"
   # working directory, the arguments given to use_asdf, direnv status, and the tools-version modification times.
   # shellcheck disable=SC2154 # var is referenced but not assigned.
-  cksum <(pwd) <(echo "$@") <("$direnv" status) <(test -f "$file" && ls -l "$file") | cut -d' ' -f 1 | tr $'\n' '-' | sed -e 's/-$//'
+  cksum <(pwd) <(echo "$@") <("$direnv" status | sed 's/[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}T[0-9]\{2\}:[0-9]\{2\}:[0-9]\{2\}[+-][0-9]\{2\}:[0-9]\{2\}//') <(test -f "$file" && ls -l "$file") | cut -d' ' -f 1 | tr $'\n' '-' | sed -e 's/-$//'
 }
 
 _tgrep() {
